@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?> 
+<!DOCTYPE mapper 
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- namespace: 연결할 맵퍼 인터페이스 패키지 경로 작성-->
+<mapper namespace="com.msa4spring.mappers.EmployeeMapper">
+<!-- resultMap: 특정 엔티티 객체와 연결, id는 엔티티명+resultmap, type은 엔티티의 경로    -->
+    <resultMap id="employeeResultMap" type="com.msa4spring.entities.Employee">
+        <id column="emp_id" property="empId"/>        
+        <result column="name" property="name"/>        
+        <result column="birth" property="birth"/>        
+        <result column="gender" property="gender"/>        
+        <result column="hire_at" property="hireAt"/>        
+        <result column="fire_at" property="fireAt"/>        
+        <result column="sup_id" property="supId"/>        
+        <result column="created_at" property="createdAt"/>        
+        <result column="updated_at" property="updatedAt"/>        
+        <result column="deleted_at" property="deletedAt"/>        
+    </resultMap>
+<!-- id는 호출하고 싶은 인터페이스의 메소드명   -->
+    <select id="getEmployees" resultMap="employeeResultMap">
+        select
+            *
+        FROM employees
+        WHERE
+            deleted_at IS NULL
+        LIMIT 5
+    </select>
+    
+    <select id="findByPk" resultMap="employeeResultMap">
+        select 
+            *
+        from employees
+        where
+            deleted_at is null
+            and emp_id = #{empId}
+    </select>
+    
+    <insert 
+        id="store" 
+        parameterType="com.msa4spring.entities.Employee"
+        keyProperty="empId"
+        useGeneratedKeys="true"
+    >
+        INSERT INTO employees(
+            name
+            ,birth
+            ,gender
+            ,hire_at
+        )Values (
+            #{name}
+            ,#{birth}
+            ,#{gender}
+            ,now()
+       )
+    </insert>
+    
+    
+
+    
+    
+    
+    
+</mapper>

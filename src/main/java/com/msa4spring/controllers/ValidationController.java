@@ -2,7 +2,6 @@ package com.msa4spring.controllers;
 
 import com.msa4spring.requests.ValidationRequest;
 import jakarta.validation.Valid;
-import org.osgi.annotation.bundle.Attribute;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,7 +13,9 @@ public class ValidationController {
     @PostMapping("/validation")
     public String validation(
         @Valid @ModelAttribute ValidationRequest validationRequest
-        ){
+    ){  
+        // double test = 1 / 0; E99 에러 내기용
+        
         return String.format(
             "Email:%s, pw: %s, age: %d, name: %s"
             ,validationRequest.email()
